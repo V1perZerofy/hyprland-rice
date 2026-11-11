@@ -179,4 +179,4 @@ A few paths are mine. Change them to match your setup:
 - [pywal](https://github.com/dylanaraps/pywal) for the colours
 - [LazyVim](https://www.lazyvim.org) for the Neovim base
 - The cava shaders keep their authors' credits in the files
-- [Claude](claude.ai) for helping me navigate all of this and helping me learn faster
+- [Claude](https://claude.ai) for helping me navigate all of this and helping me learn faster
