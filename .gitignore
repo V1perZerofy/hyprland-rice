@@ -1,0 +1,31 @@
+# Hyprland rice — allowlist: everything in ~/.config is ignored except the
+# folders listed below. To add something: append `!name/` (or `!file`).
+/*
+
+!/.gitignore
+!/README.md
+
+!/hypr/
+!/quickshell/
+!/kitty/
+!/fish/
+!/starship.toml
+!/fastfetch/
+!/btop/
+!/cava/
+!/wal/
+!/scripts/
+!/gtk-3.0/
+!/gtk-4.0/
+!/qt5ct/
+# LazyVim (based on the LazyVim starter)
+!/nvim/
+!/systemd/
+
+# machine state / secrets inside included folders
+fish/fish_variables
+quickshell/cider-token
+# regenerated on every wallpaper change
+scripts/wal.conf
+**/__pycache__/
+*.pyc
