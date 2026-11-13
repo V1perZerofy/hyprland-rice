@@ -218,9 +218,8 @@ Scope {
             clip: true
 
             Behavior on x {
-                NumberAnimation {
-                    duration: 260
-                    easing.type: Easing.OutCubic
+                Anim {
+                    duration: Theme.animSlow
                 }
             }
 

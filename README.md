@@ -7,7 +7,8 @@ nicer" and turned into a whole desktop. Loosely inspired by
 [end-4's dots](https://github.com/end-4/dots-hyprland), but smaller, built
 around how I actually use my laptop.
 
-Everything takes its colours from the wallpaper. Pick a new one with
+Everything takes its colours from the wallpaper, and glides to the new
+palette when it changes. Pick a new one with
 `SUPER+B` and the bar, notifications, terminal, Firefox and window borders all
 follow.
 
@@ -44,7 +45,7 @@ follow.
 - **Notes** (`SUPER+M`): reads my Obsidian vault right in a sidebar, with
   wikilinks and checkboxes
 - **Settings** (`SUPER+,`): bar on top or bottom, transparency, size, which
-  modules show, 24-hour clock, weather place. Applied live, saved to
+  modules show, 24-hour clock, animations on/off, weather place. Applied live, saved to
   `~/.local/state/`, so personal bits stay out of this repo
 - **Keybind cheatsheet** (`SUPER+H`): built live from `hyprland.lua`, so it's
   never out of date

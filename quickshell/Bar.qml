@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.services
+import qs.components
 import qs.modules
 
 // Bar for one screen (top or bottom, see Settings) — same layout as the waybar:
@@ -19,10 +20,20 @@ PanelWindow {
     }
     implicitHeight: Theme.barHeight
     color: "transparent"
-    visible: Popups.barVisible
+    // SUPER+O slides the bar out (towards its screen edge) and back; the
+    // window (and its reserved space) stays until the slide has finished
+    readonly property real hiddenOffset: Settings.barBottom ? Theme.barHeight : -Theme.barHeight
+    property real offset: Popups.barVisible ? 0 : hiddenOffset
+    Behavior on offset {
+        Anim {}
+    }
+    visible: Popups.barVisible || Math.abs(offset - hiddenOffset) > 0.5
 
     Rectangle {
         anchors.fill: parent
+        transform: Translate {
+            y: bar.offset
+        }
         color: Theme.barBg
         // round the corners that face the screen
         bottomLeftRadius: Settings.barBottom ? 0 : 12

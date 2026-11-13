@@ -238,6 +238,17 @@ Scope {
                         onToggled: Settings.clock24h = !Settings.clock24h
                     }
                 }
+                Row_ {
+                    label: "Animations"
+                    hint: "off = everything instant"
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    Switch {
+                        checked: Settings.animations
+                        onToggled: Settings.animations = !Settings.animations
+                    }
+                }
 
                 // ── modules ──
                 Section {

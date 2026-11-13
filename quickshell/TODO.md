@@ -39,6 +39,9 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
   bar top/bottom, bar + pill opacity, size, module toggles, 24 h clock, weather
   place + units; saved to ~/.local/state/quickshell-settings.json
 - [x] Weather pill + card (Open-Meteo): now, 12 hours, 5 days
+- [x] Motion: one shared style (components/Anim.qml, Theme.anim*/curve), palette
+  crossfade on wallpaper change, cards zoom in + resize smoothly, bar slides on
+  SUPER+O, pills fade in, track title/cover fade; "Animations" switch in settings
 
 ## Left sidebar
 

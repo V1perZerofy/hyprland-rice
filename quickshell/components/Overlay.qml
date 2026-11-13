@@ -49,8 +49,8 @@ PanelWindow {
         color: Qt.rgba(0, 0, 0, 0.35)
         opacity: root.open ? 1 : 0
         Behavior on opacity {
-            NumberAnimation {
-                duration: 180
+            Anim {
+                duration: Theme.animFast
             }
         }
         MouseArea {
@@ -74,16 +74,12 @@ PanelWindow {
         opacity: root.open ? 1 : 0
         scale: root.open ? 1 : 0.96
         Behavior on opacity {
-            NumberAnimation {
-                duration: 180
-                easing.type: Easing.OutCubic
+            Anim {
+                duration: Theme.animFast
             }
         }
         Behavior on scale {
-            NumberAnimation {
-                duration: 220
-                easing.type: Easing.OutCubic
-            }
+            Anim {}
         }
 
         // swallow clicks on the card itself

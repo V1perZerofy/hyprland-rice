@@ -17,6 +17,45 @@ Singleton {
     property color tertiary: "#9772b2"  // wal color5
     property color muted: "#4d575c"     // wal color8
     property string wallpaper: ""
+    // new wallpaper → the whole shell glides to the new palette (not at
+    // startup: the first palette just appears)
+    property bool loaded: false
+    Behavior on bg {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
+    Behavior on fg {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
+    Behavior on primary {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
+    Behavior on secondary {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
+    Behavior on tertiary {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
+    Behavior on muted {
+        enabled: root.loaded
+        ColorAnimation {
+            duration: root.animSlow * 2
+        }
+    }
     readonly property color error: "#e8677a"
     readonly property color warning: "#e5b567"
     readonly property color success: "#8ccf7e"
@@ -45,7 +84,12 @@ Singleton {
     readonly property int pillHeight: Math.round(28 * s)
     readonly property int radius: 10
     readonly property int cardRadius: 18
-    readonly property int anim: 200
+    // motion: one style for the whole shell; Settings.animations = false → instant
+    readonly property bool motion: Settings.animations
+    readonly property int animFast: motion ? 140 : 0
+    readonly property int anim: motion ? 220 : 0
+    readonly property int animSlow: motion ? 380 : 0
+    readonly property var curve: [0.2, 0.0, 0.0, 1.0, 1.0, 1.0]   // emphasized decelerate
 
     function alpha(c, a) {
         return Qt.rgba(c.r, c.g, c.b, a);
@@ -79,5 +123,8 @@ Singleton {
         onFileChanged: reload()
     }
 
-    Component.onCompleted: parse()
+    Component.onCompleted: {
+        parse();
+        Qt.callLater(() => loaded = true);
+    }
 }

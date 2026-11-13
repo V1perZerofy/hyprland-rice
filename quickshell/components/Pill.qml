@@ -31,6 +31,19 @@ Rectangle {
             duration: Theme.anim
         }
     }
+    // fade in whenever the pill (re)appears: media starts, weather loads…
+    onVisibleChanged: if (visible) appear.restart()
+    NumberAnimation {
+        id: appear
+        target: root
+        property: "opacity"
+        from: 0
+        to: 1
+        duration: Theme.anim
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: Theme.curve
+    }
+
     Behavior on implicitWidth {
         NumberAnimation {
             duration: Theme.anim

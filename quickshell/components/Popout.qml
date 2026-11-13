@@ -85,21 +85,29 @@ PanelWindow {
         color: Theme.cardBg
         border.color: Theme.border
         border.width: 1
+        clip: true      // content stays inside while the height animates
 
+        // open: fade + slight zoom out of the bar; content changes (tabs,
+        // search results…) resize smoothly once the card is fully shown
         opacity: root.open ? 1 : 0
+        scale: root.open ? 1 : 0.97
+        transformOrigin: Settings.barBottom ? Item.Bottom : Item.Top
         Behavior on opacity {
-            NumberAnimation {
-                duration: 160
-                easing.type: Easing.OutCubic
+            Anim {
+                duration: Theme.animFast
             }
         }
+        Behavior on scale {
+            Anim {}
+        }
+        Behavior on height {
+            enabled: root.open && card.opacity > 0.99
+            Anim {}
+        }
         transform: Translate {
-            y: root.open ? 0 : (Settings.barBottom ? 10 : -10)
+            y: root.open ? 0 : (Settings.barBottom ? 8 : -8)
             Behavior on y {
-                NumberAnimation {
-                    duration: 220
-                    easing.type: Easing.OutCubic
-                }
+                Anim {}
             }
         }
 

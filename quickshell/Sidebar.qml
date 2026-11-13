@@ -70,9 +70,8 @@ Scope {
             clip: true
 
             Behavior on x {
-                NumberAnimation {
-                    duration: 260
-                    easing.type: Easing.OutCubic
+                Anim {
+                    duration: Theme.animSlow
                 }
             }
 
@@ -158,10 +157,7 @@ Scope {
                         radius: 9
                         color: Theme.alpha(Theme.primary, 0.25)
                         Behavior on x {
-                            NumberAnimation {
-                                duration: 200
-                                easing.type: Easing.OutCubic
-                            }
+                            Anim {}
                         }
                     }
 

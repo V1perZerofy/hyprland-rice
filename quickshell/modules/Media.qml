@@ -84,6 +84,17 @@ Pill {
             return a ? t + " — " + a : t;
         }
         size: Theme.fontSmall + 1
+        // new track: the title fades in
+        onTextChanged: titleFade.restart()
+        NumberAnimation on opacity {
+            id: titleFade
+            running: false
+            from: 0
+            to: 1
+            duration: Theme.animSlow
+            easing.type: Easing.BezierSpline
+            easing.bezierCurve: Theme.curve
+        }
     }
 
     component ResultRow: Rectangle {
@@ -439,6 +450,13 @@ Pill {
                     asynchronous: true
                     sourceSize.width: 192
                     sourceSize.height: 192
+                    // covers fade in once loaded instead of popping in
+                    opacity: status === Image.Ready ? 1 : 0
+                    Behavior on opacity {
+                        Anim {
+                            duration: Theme.animSlow
+                        }
+                    }
                 }
             }
 
