@@ -25,9 +25,12 @@ Singleton {
     property alias scale: adapter.scale                   // 0.85..1.3
     property alias clock24h: adapter.clock24h
     property alias hidden: adapter.hidden                 // module ids
-    property alias weatherCity: adapter.weatherCity       // display name, "" = off
-    property alias weatherLat: adapter.weatherLat
-    property alias weatherLon: adapter.weatherLon
+    // { name, lat, lon } as ONE value: setting name/lat/lon one by one raced
+    // with the saves and kept a stale latitude
+    property alias weatherPlace: adapter.weatherPlace
+    readonly property string weatherCity: weatherPlace && weatherPlace.name ? weatherPlace.name : ""   // "" = off
+    readonly property real weatherLat: weatherPlace && weatherPlace.lat ? weatherPlace.lat : 0
+    readonly property real weatherLon: weatherPlace && weatherPlace.lon ? weatherPlace.lon : 0
     property alias weatherFahrenheit: adapter.weatherFahrenheit
 
     readonly property bool barBottom: barPosition === "bottom"
@@ -52,14 +55,22 @@ Singleton {
         // the weather city is left alone on purpose
     }
 
+    Timer {
+        id: saveLater
+        interval: 300
+        onTriggered: file.writeAdapter()
+    }
+
     FileView {
         id: file
         path: Quickshell.env("HOME") + "/.local/state/quickshell-settings.json"
         blockLoading: true      // settings before the first frame: no bar jumping
         printErrors: false
-        // no watchChanges: our own writes would be re-read mid-update (setting
-        // city, lat, lon one after another lost the lat). Edit via the overlay.
-        onAdapterUpdated: writeAdapter()
+        // no watchChanges (our own writes would be read back mid-update), and
+        // several changes in a row (Reset, picking a place) are saved once
+        blockWrites: true
+        atomicWrites: true
+        onAdapterUpdated: saveLater.restart()
         onLoadFailed: writeAdapter()        // first run: create it with defaults
 
         JsonAdapter {
@@ -70,9 +81,7 @@ Singleton {
             property real scale: 1.0
             property bool clock24h: true
             property var hidden: []
-            property string weatherCity: ""
-            property real weatherLat: 0
-            property real weatherLon: 0
+            property var weatherPlace: ({})
             property bool weatherFahrenheit: false
         }
     }

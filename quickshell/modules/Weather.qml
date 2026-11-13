@@ -37,7 +37,6 @@ Pill {
         onOpenChanged: {
             if (!open)
                 return;
-            hoursFlick.contentX = 0;        // always start at "Now"
             if (!(Date.now() - Weather.updated.getTime() < 5 * 60 * 1000))
                 Weather.refresh();
         }
@@ -114,45 +113,39 @@ Pill {
             implicitHeight: hours.implicitHeight + 16
             radius: 12
             color: Theme.surface
-            Flickable {
-                id: hoursFlick
+            // 7 fixed columns (now … +12 h in 2 h steps): nothing to scroll
+            Row {
+                id: hours
                 anchors.fill: parent
                 anchors.margins: 8
-                contentWidth: hours.implicitWidth
-                clip: true
-                boundsBehavior: Flickable.StopAtBounds
-                Row {
-                    id: hours
-                    spacing: 4
-                    Repeater {
-                        model: Weather.hourly
-                        ColumnLayout {
-                            required property var modelData
-                            required property int index
-                            width: Math.max(38, (hoursFlick.width - 4 * 6) / 7)
-                            spacing: 3
-                            StyledText {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: index === 0 ? "Now" : Qt.formatDateTime(new Date(modelData.time), Settings.clock24h ? "HH" : "h AP")
-                                size: Theme.fontSmall - 2
-                                color: Theme.subtext
-                            }
-                            Glyph {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: Weather.glyph(modelData.code, modelData.isDay)
-                                color: Theme.fg
-                            }
-                            StyledText {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: Weather.deg(modelData.temp)
-                                size: Theme.fontSmall
-                            }
-                            StyledText {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: modelData.rain >= 20 ? modelData.rain + "%" : " "
-                                size: Theme.fontSmall - 3
-                                color: Theme.primary
-                            }
+                Repeater {
+                    model: Weather.hourly
+                    ColumnLayout {
+                        required property var modelData
+                        required property int index
+                        width: hours.width / Math.max(1, Weather.hourly.length)
+                        spacing: 3
+                        StyledText {
+                            Layout.alignment: Qt.AlignHCenter
+                            text: index === 0 ? "Now" : Qt.formatDateTime(new Date(modelData.time), Settings.clock24h ? "HH" : "h AP")
+                            size: Theme.fontSmall - 2
+                            color: Theme.subtext
+                        }
+                        Glyph {
+                            Layout.alignment: Qt.AlignHCenter
+                            text: Weather.glyph(modelData.code, modelData.isDay)
+                            color: Theme.fg
+                        }
+                        StyledText {
+                            Layout.alignment: Qt.AlignHCenter
+                            text: Weather.deg(modelData.temp)
+                            size: Theme.fontSmall
+                        }
+                        StyledText {
+                            Layout.alignment: Qt.AlignHCenter
+                            text: modelData.rain >= 20 ? modelData.rain + "%" : " "
+                            size: Theme.fontSmall - 3
+                            color: Theme.primary
                         }
                     }
                 }

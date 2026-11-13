@@ -17,7 +17,7 @@ Singleton {
     property var current: null
     // [{ date, code, max, min, rain }]  today first
     property var daily: []
-    // [{ time, temp, code, rain, isDay }]  next 12 hours
+    // [{ time, temp, code, rain, isDay }]  now and every 2 h up to +12 h
     property var hourly: []
     property bool loading: false
     property string error: ""
@@ -46,7 +46,7 @@ Singleton {
         if (!enabled)
             return;
         loading = true;
-        const q = "latitude=" + Settings.weatherLat + "&longitude=" + Settings.weatherLon + "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day" + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" + "&hourly=temperature_2m,weather_code,precipitation_probability,is_day&forecast_hours=12&forecast_days=5" + "&timezone=auto" + (Settings.weatherFahrenheit ? "&temperature_unit=fahrenheit&wind_speed_unit=mph" : "");
+        const q = "latitude=" + Settings.weatherLat + "&longitude=" + Settings.weatherLon + "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day" + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" + "&hourly=temperature_2m,weather_code,precipitation_probability,is_day&forecast_hours=13&forecast_days=5" + "&timezone=auto" + (Settings.weatherFahrenheit ? "&temperature_unit=fahrenheit&wind_speed_unit=mph" : "");
         get("https://api.open-meteo.com/v1/forecast?" + q, (d, err) => {
             loading = false;
             if (!d || !d.current) {
@@ -71,13 +71,14 @@ Singleton {
                         min: d.daily.temperature_2m_min[i],
                         rain: d.daily.precipitation_probability_max[i]
                     }));
+            // now, +2 h, +4 h … +12 h: 7 columns that always fit (no scrolling)
             hourly = d.hourly.time.map((t, i) => ({
                         time: t,
                         temp: d.hourly.temperature_2m[i],
                         code: d.hourly.weather_code[i],
                         rain: d.hourly.precipitation_probability[i],
                         isDay: d.hourly.is_day[i] === 1
-                    }));
+                    })).filter((h, i) => i % 2 === 0);
             updated = new Date();
         });
     }
@@ -101,13 +102,15 @@ Singleton {
         });
     }
     function choose(m) {
-        Settings.weatherCity = m.name;
-        Settings.weatherLat = m.lat;
-        Settings.weatherLon = m.lon;
+        Settings.weatherPlace = {
+            name: m.name,
+            lat: m.lat,
+            lon: m.lon
+        };
         matches = [];
     }
     function clear() {
-        Settings.weatherCity = "";
+        Settings.weatherPlace = {};
         current = null;
         daily = [];
         hourly = [];
@@ -172,7 +175,7 @@ Singleton {
     }
     Connections {
         target: Settings
-        function onWeatherLatChanged() {
+        function onWeatherPlaceChanged() {
             root.refresh();
         }
         function onWeatherFahrenheitChanged() {
