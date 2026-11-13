@@ -21,7 +21,6 @@
 # LazyVim (based on the LazyVim starter)
 !/nvim/
 !/systemd/
-!/pipewire/
 
 # machine state / secrets inside included folders
 fish/fish_variables
