@@ -53,7 +53,8 @@ PanelWindow {
         left: true
         right: true
     }
-    margins.top: Theme.barHeight
+    margins.top: Settings.barBottom ? 0 : Theme.barHeight
+    margins.bottom: Settings.barBottom ? Theme.barHeight : 0
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "qs-popout"
@@ -77,7 +78,7 @@ PanelWindow {
     Rectangle {
         id: card
         x: Math.max(8, Math.min(root.width - root.cardWidth - 8, root.anchorX - root.cardWidth / 2))
-        y: 8
+        y: Settings.barBottom ? root.height - height - 8 : 8
         width: root.cardWidth
         height: column.implicitHeight + root.padding * 2
         radius: Theme.cardRadius
@@ -93,7 +94,7 @@ PanelWindow {
             }
         }
         transform: Translate {
-            y: root.open ? 0 : -10
+            y: root.open ? 0 : (Settings.barBottom ? 10 : -10)
             Behavior on y {
                 NumberAnimation {
                     duration: 220

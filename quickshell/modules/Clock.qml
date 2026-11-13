@@ -18,7 +18,7 @@ Pill {
     }
 
     StyledText {
-        text: Qt.formatDateTime(clock.date, "HH:mm")
+        text: Qt.formatDateTime(clock.date, Settings.clock24h ? "HH:mm" : "h:mm AP")
         bold: true
         color: Theme.primary
     }
@@ -71,7 +71,7 @@ Pill {
             Layout.fillWidth: true
             spacing: 0
             StyledText {
-                text: Qt.formatDateTime(clock.date, "HH:mm:ss")
+                text: Qt.formatDateTime(clock.date, Settings.clock24h ? "HH:mm:ss" : "h:mm:ss AP")
                 size: 34
                 bold: true
                 color: Theme.primary

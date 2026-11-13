@@ -19,7 +19,7 @@ Pill {
         return d.batteryAvailable ? Math.round(d.battery * 100) + "%" : "";
     }
 
-    visible: adapter !== null
+    visible: (adapter !== null) && Settings.shows("bluetooth")
     active: pop.open
     onClicked: m => {
         if (m.button === Qt.RightButton)

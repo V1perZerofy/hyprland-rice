@@ -199,6 +199,7 @@ hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("qs ipc call notes toggle")) -- markd
 hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("qs ipc call music search")) -- Apple Music search (Cider) in the media card
 hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("qs ipc call keybinds toggle")) -- keybind cheatsheet
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("qs ipc call overview toggle")) -- workspace overview
+hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("qs ipc call settings toggle")) -- settings
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("pkill -x qs; sleep 1; qs -n -d")) -- restart bar (-n: never two copies)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("cider --ozone-platform=wayland"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))

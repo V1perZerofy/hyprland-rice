@@ -28,6 +28,7 @@ follow.
   profiles, one-click `.ovpn` import, Proton VPN
 - Volume, Bluetooth, battery with a power menu, updates (repo + AUR), tray
 - Battery warnings at 15 % and 5 % (the pill pulses red)
+- **Weather** (Open-Meteo, no account): now, next 12 hours, 5 days
 
 **Around the bar**
 - **Notifications**: toasts and a notification centre. Replaces dunst.
@@ -42,6 +43,9 @@ follow.
   list and a local **Ollama** chat
 - **Notes** (`SUPER+M`): reads my Obsidian vault right in a sidebar, with
   wikilinks and checkboxes
+- **Settings** (`SUPER+,`): bar on top or bottom, transparency, size, which
+  modules show, 24-hour clock, weather place. Applied live, saved to
+  `~/.local/state/`, so personal bits stay out of this repo
 - **Keybind cheatsheet** (`SUPER+H`): built live from `hyprland.lua`, so it's
   never out of date
 
@@ -64,6 +68,7 @@ what's next.
 | `SUPER+M` | Notes |
 | `SUPER+B` | Wallpaper picker |
 | `SUPER+U` | Music search (starts Cider if needed) |
+| `SUPER+,` | Settings |
 | `SUPER+O` | Show / hide the bar |
 | `SUPER+Z` | Restart the shell |
 | `SUPER+I` / `+Shift` / `+Ctrl` | Restore notification / clear all / Do Not Disturb |
@@ -148,7 +153,8 @@ Log into Hyprland. The bar, OSD and notifications start on their own
 
 ## Make it yours
 
-A few paths are mine. Change them to match your setup:
+Bar position, transparency, size, modules and the weather place are in the
+settings (`SUPER+,`). A few paths are still mine in the code:
 
 | What | Where |
 | --- | --- |

@@ -8,7 +8,7 @@ import qs.components
 // System tray (hidden when empty). Left: activate · Right: menu.
 Rectangle {
     id: root
-    visible: SystemTray.items.values.length > 0
+    visible: (SystemTray.items.values.length > 0) && Settings.shows("tray")
     implicitWidth: row.implicitWidth + 16
     implicitHeight: Theme.pillHeight
     radius: Theme.radius

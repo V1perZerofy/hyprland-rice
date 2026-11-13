@@ -67,7 +67,7 @@ Scope {
     PanelWindow {
         screen: Quickshell.screens.find(s => Hyprland.focusedMonitor && s.name === Hyprland.focusedMonitor.name) ?? Quickshell.screens[0]
         anchors.bottom: true
-        margins.bottom: 90
+        margins.bottom: 90 + (Settings.barBottom && Popups.barVisible ? Theme.barHeight : 0)
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.namespace: "qs-osd"

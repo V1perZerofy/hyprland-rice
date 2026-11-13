@@ -194,8 +194,8 @@ Scope {
             bottom: true
             right: true
         }
-        margins.top: (Popups.barVisible ? Theme.barHeight : 0) + 8
-        margins.bottom: 8
+        margins.top: (Popups.barVisible && !Settings.barBottom ? Theme.barHeight : 0) + 8
+        margins.bottom: (Popups.barVisible && Settings.barBottom ? Theme.barHeight : 0) + 8
         margins.right: 8
         implicitWidth: root.panelWidth
         exclusionMode: root.pinned ? ExclusionMode.Normal : ExclusionMode.Ignore

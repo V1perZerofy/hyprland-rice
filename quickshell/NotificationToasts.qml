@@ -14,7 +14,7 @@ PanelWindow {
         top: true
         right: true
     }
-    margins.top: (Popups.barVisible ? Theme.barHeight : 0) + 8
+    margins.top: (Popups.barVisible && !Settings.barBottom ? Theme.barHeight : 0) + 8
     margins.right: 10
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Overlay

@@ -4,7 +4,7 @@ import Quickshell
 import qs.services
 import qs.modules
 
-// Top bar for one screen — same layout as the waybar:
+// Bar for one screen (top or bottom, see Settings) — same layout as the waybar:
 // left: clock (+ window title) · centre: workspaces + media · right: status pills.
 PanelWindow {
     id: bar
@@ -12,7 +12,8 @@ PanelWindow {
     screen: modelData
 
     anchors {
-        top: true
+        top: !Settings.barBottom
+        bottom: Settings.barBottom
         left: true
         right: true
     }
@@ -23,8 +24,11 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: Theme.barBg
-        bottomLeftRadius: 12
-        bottomRightRadius: 12
+        // round the corners that face the screen
+        bottomLeftRadius: Settings.barBottom ? 0 : 12
+        bottomRightRadius: Settings.barBottom ? 0 : 12
+        topLeftRadius: Settings.barBottom ? 12 : 0
+        topRightRadius: Settings.barBottom ? 12 : 0
 
         RowLayout {
             anchors.left: parent.left
@@ -32,9 +36,15 @@ PanelWindow {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 10
 
-            LauncherButton {}
-            NotesButton {}
-            Clock {}
+            LauncherButton {
+                visible: Settings.shows("launcher")
+            }
+            NotesButton {
+                visible: Settings.shows("notes")
+            }
+            Clock {
+                visible: Settings.shows("clock")
+            }
             ActiveWindow {
                 screen: bar.modelData
                 Layout.maximumWidth: Math.max(0, bar.width / 2 - centre.width / 2 - 260)
@@ -48,8 +58,10 @@ PanelWindow {
 
             Workspaces {
                 screen: bar.modelData
+                visible: Settings.shows("workspaces")
             }
             Media {}
+            Weather {}
         }
 
         RowLayout {
@@ -59,11 +71,21 @@ PanelWindow {
             spacing: 6
 
             Tray {}
-            Notifications {}
-            Updates {}
-            Monitors {}
-            Network {}
-            Audio {}
+            Notifications {
+                visible: Settings.shows("notifications")
+            }
+            Updates {
+                visible: Settings.shows("updates")
+            }
+            Monitors {
+                visible: Settings.shows("monitors")
+            }
+            Network {
+                visible: Settings.shows("network")
+            }
+            Audio {
+                visible: Settings.shows("audio")
+            }
             Bluetooth {}
             Battery {}
         }

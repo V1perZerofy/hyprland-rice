@@ -12,7 +12,7 @@ StyledText {
     readonly property bool show: win !== null && win.workspace !== null && Hyprland.focusedWorkspace === win.workspace && win.monitor === Hyprland.monitorFor(screen)
 
     text: show ? (win.title || "") : ""
-    visible: text !== ""
+    visible: (text !== "") && Settings.shows("window")
     size: Theme.fontSmall + 1
     color: Theme.subtext
     Layout.maximumWidth: 340

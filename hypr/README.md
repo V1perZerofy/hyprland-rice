@@ -110,6 +110,7 @@ Main modifier (`mainMod`) is **SUPER** (the Windows key).
 | `SUPER + U` | Music search (Cider) |
 | `SUPER + H` | Keybind cheatsheet (always up to date, read from this config) |
 | `SUPER + Tab` | Workspace overview |
+| `SUPER + ,` | Settings (bar position, transparency, size, modules, weather) |
 | `SUPER + N` | Start Quickshell (if not running) |
 | `SUPER + O` | Show / hide the bar |
 | `SUPER + Shift + S` | Region screenshot (hyprshot) |

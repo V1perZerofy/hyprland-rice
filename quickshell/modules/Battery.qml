@@ -33,7 +33,7 @@ Pill {
         return h > 0 ? h + " h " + m + " min" : m + " min";
     }
 
-    visible: dev !== null && dev.isPresent
+    visible: (dev !== null && dev.isPresent) && Settings.shows("battery")
 
     // pct reads 0 for a moment while UPower is still loading: never trust 0
     readonly property bool known: dev !== null && dev.ready && dev.isPresent && pct > 0

@@ -22,8 +22,8 @@ Singleton {
     readonly property color success: "#8ccf7e"
 
     // ── surfaces ─────────────────────────────────────────────────────────────
-    readonly property color barBg: alpha(bg, 0.30)
-    readonly property color pillBg: alpha(bg, 0.70)
+    readonly property color barBg: alpha(bg, Settings.barOpacity)
+    readonly property color pillBg: alpha(bg, Settings.pillOpacity)
     readonly property color pillHover: alpha(mix(bg, fg, 0.12), 0.80)
     readonly property color cardBg: alpha(mix(bg, "#000000", 0.25), 0.94)
     readonly property color panelBg: mix(bg, "#000000", 0.25)   // reading surfaces: fully opaque
@@ -34,11 +34,13 @@ Singleton {
 
     // ── metrics ──────────────────────────────────────────────────────────────
     readonly property string font: "JetBrainsMono Nerd Font Propo"
-    readonly property int fontSize: 14
-    readonly property int fontSmall: 12
-    readonly property int iconSize: 16
-    readonly property int barHeight: 38
-    readonly property int pillHeight: 28
+    // sizes follow the "Size" setting (Settings.scale)
+    readonly property real s: Settings.scale
+    readonly property int fontSize: Math.round(14 * s)
+    readonly property int fontSmall: Math.round(12 * s)
+    readonly property int iconSize: Math.round(16 * s)
+    readonly property int barHeight: Math.round(38 * s)
+    readonly property int pillHeight: Math.round(28 * s)
     readonly property int radius: 10
     readonly property int cardRadius: 18
     readonly property int anim: 200

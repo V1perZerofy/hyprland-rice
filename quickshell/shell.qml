@@ -26,6 +26,7 @@ ShellRoot {
     Launcher {}
     Keybinds {}
     Overview {}
+    SettingsPanel {}
     WallpaperPicker {}
     Notes {}
     Sidebar {}

@@ -47,8 +47,8 @@ Scope {
             bottom: true
             left: true
         }
-        margins.top: (Popups.barVisible ? Theme.barHeight : 0) + 8
-        margins.bottom: 8
+        margins.top: (Popups.barVisible && !Settings.barBottom ? Theme.barHeight : 0) + 8
+        margins.bottom: (Popups.barVisible && Settings.barBottom ? Theme.barHeight : 0) + 8
         margins.left: 8
         implicitWidth: 440
         exclusionMode: ExclusionMode.Ignore
@@ -118,6 +118,14 @@ Scope {
                             text: Qt.formatDateTime(clock.date, "dddd, d MMMM") + "  ·  up " + SysStats.uptimeText()
                             size: Theme.fontSmall - 1
                             color: Theme.subtext
+                        }
+                    }
+                    IconButton {
+                        icon: Icons.settings
+                        size: 34
+                        onClicked: {
+                            root.open = false;
+                            Popups.requested("settings");
                         }
                     }
                     IconButton {

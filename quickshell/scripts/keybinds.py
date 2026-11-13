@@ -72,7 +72,7 @@ KEY_NAMES = {
     "XF86AudioRaiseVolume": "Vol +", "XF86AudioLowerVolume": "Vol −", "XF86AudioMute": "Mute",
     "XF86AudioMicMute": "Mic mute", "XF86MonBrightnessUp": "Bright +", "XF86MonBrightnessDown": "Bright −",
     "XF86AudioNext": "Next", "XF86AudioPrev": "Prev", "XF86AudioPlay": "Play", "XF86AudioPause": "Pause",
-    "TAB": "Tab", "Tab": "Tab", "CTRL": "Ctrl", "SHIFT": "Shift", "ALT": "Alt", "SUPER": "Super",
+    "TAB": "Tab", "comma": ",", "Tab": "Tab", "CTRL": "Ctrl", "SHIFT": "Shift", "ALT": "Alt", "SUPER": "Super",
 }
 
 
@@ -87,7 +87,7 @@ QS = {  # qs ipc call <target> <fn>
     "bar toggle": "Show / hide bar", "sidebar toggle": "Dashboard sidebar",
     "notifs restore": "Restore last notification", "notifs closeAll": "Clear notifications",
     "notifs dnd": "Do not disturb", "keybinds toggle": "This cheatsheet",
-    "music play": "Play / pause", "overview toggle": "Workspace overview",
+    "music play": "Play / pause", "overview toggle": "Workspace overview", "settings toggle": "Settings",
 }
 
 

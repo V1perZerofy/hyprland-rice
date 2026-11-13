@@ -20,7 +20,7 @@ Pill {
     id: root
     readonly property var player: Players.active
 
-    visible: player !== null || Cider.available
+    visible: (player !== null || Cider.available) && Settings.shows("media")
     active: pop.open
     progress: player && player.lengthSupported && player.length > 0 ? player.position / player.length : -1
 
@@ -76,7 +76,8 @@ Pill {
         text: {
             if (!root.player)
                 return "Cider";
-            if (!root.player.trackTitle && root.player.playbackState === MprisPlaybackState.Stopped)
+            // nothing loaded (Cider reports stopped *or* paused then): show the player
+            if (!root.player.trackTitle)
                 return root.player.identity || "Nothing playing";
             const t = root.player.trackTitle || "Unknown";
             const a = root.player.trackArtist || "";
@@ -446,7 +447,7 @@ Pill {
                 spacing: 2
                 StyledText {
                     Layout.fillWidth: true
-                    text: pop.p ? pop.p.trackTitle || (pop.p.playbackState === MprisPlaybackState.Stopped ? "Nothing playing" : "Unknown title") : ""
+                    text: pop.p ? pop.p.trackTitle || "Nothing playing" : ""
                     bold: true
                     size: Theme.fontSize + 1
                 }

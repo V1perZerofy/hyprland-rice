@@ -103,4 +103,9 @@ Singleton {
 
     readonly property string keyboard: g(0xF030C)
     readonly property string mouse: g(0xF037D)
+    readonly property string humidity: g(0xF058E)      // water-percent
+    readonly property string wind: g(0xF059D)          // weather-windy
+    readonly property string umbrella: g(0xF054A)
+    readonly property string settings: g(0xF0493)      // cog
+    readonly property string mapMarker: g(0xF034E)
 }

@@ -37,11 +37,13 @@ PanelWindow {
 
     screen: owner.QsWindow.window ? owner.QsWindow.window.screen : null
     anchors {
-        top: true
+        top: !Settings.barBottom
+        bottom: Settings.barBottom
         left: true
         right: true
     }
-    margins.top: Theme.barHeight
+    margins.top: Settings.barBottom ? 0 : Theme.barHeight
+    margins.bottom: Settings.barBottom ? Theme.barHeight : 0
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "qs-wspreview"
@@ -57,7 +59,7 @@ PanelWindow {
         id: card
         width: root.mapW + 20
         height: root.mapH + 52
-        y: 8
+        y: Settings.barBottom ? 12 : 8
         x: Math.max(8, Math.min(root.width - width - 8, root.centreX - width / 2))
         radius: Theme.cardRadius
         color: Theme.cardBg
@@ -80,7 +82,7 @@ PanelWindow {
             }
         }
         transform: Translate {
-            y: root.shown ? 0 : -8
+            y: root.shown ? 0 : (Settings.barBottom ? 8 : -8)
             Behavior on y {
                 NumberAnimation {
                     duration: 200

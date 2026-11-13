@@ -35,6 +35,10 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
   Do Not Disturb), battery pill pulses red; once per discharge
 - [x] Workspace overview on SUPER+Tab (Overview.qml): live previews, click to go,
   drag a window onto a workspace to move it, middle-click closes, ←→↑↓ Enter 1–9
+- [x] Settings overlay on SUPER+comma (SettingsPanel.qml, services/Settings.qml):
+  bar top/bottom, bar + pill opacity, size, module toggles, 24 h clock, weather
+  place + units; saved to ~/.local/state/quickshell-settings.json
+- [x] Weather pill + card (Open-Meteo): now, 12 hours, 5 days
 
 ## Left sidebar
 
@@ -95,7 +99,6 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 
 ## Bar polish
 
-- [ ] Settings card: bar position, which modules show, transparency → JSON file
 - [ ] Wi-Fi password prompt in the card (no impala round-trip for new networks)
 - [ ] Hover tooltips (e.g. full window title, update list preview)
 - [ ] Night light toggle (hyprsunset)
