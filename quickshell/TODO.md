@@ -122,6 +122,9 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 
 - `Quickshell.Networking` finds no devices with NetworkManager 1.58 on qs 0.3.2,
   so Wi-Fi uses `services/Net.qml` (nmcli). Revisit after a quickshell update.
+- After restarting PipeWire (`systemctl --user restart pipewire …`) the bar
+  keeps a dead PipeWire connection (volume card / OSD stop updating):
+  restart it with SUPER+Z.
 - Hyprland uses the Lua config: dispatches must be Lua, e.g.
   `Hyprland.dispatch('hl.dsp.focus({workspace="3"})')`.
 - With dunst masked, notifications go nowhere while qs isn't running.

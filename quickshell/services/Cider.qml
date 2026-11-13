@@ -29,11 +29,34 @@ Singleton {
     // drill-in (artist top songs / album tracks): { title, items } or null
     property var detail: null
 
+    // Requests that never answer (Cider starting up / hanging) would otherwise
+    // stay open forever; Qt allows ~6 connections per host, so a few of those
+    // block every later request and `available` never recovers. So: every
+    // request is aborted after 4 s (→ status 0 → "not reachable").
+    property var pending: []
+    Timer {
+        interval: 1000
+        running: root.pending.length > 0
+        repeat: true
+        onTriggered: {
+            const now = Date.now();
+            for (const p of root.pending.slice())
+                if (now - p.t > 4000)
+                    p.x.abort();
+        }
+    }
+
     function request(method, path, body, cb) {
         const x = new XMLHttpRequest();
+        const entry = {
+            x: x,
+            t: Date.now()
+        };
+        pending = pending.concat([entry]);
         x.onreadystatechange = () => {
             if (x.readyState !== XMLHttpRequest.DONE)
                 return;
+            root.pending = root.pending.filter(p => p !== entry);
             let d = null;
             try {
                 d = JSON.parse(x.responseText);
@@ -192,9 +215,15 @@ Singleton {
             return;
         }
         request("GET", "/playback/now-playing", null, (d, err) => {
-            if (!d) {           // API off: plain MPRIS toggle
-                if (player)
+            if (!d) {
+                // API not answering: plain MPRIS toggle if the player can,
+                // otherwise Cider is still starting, so wait for its API
+                if (player && (player.isPlaying ? player.canPause : player.canPlay))
                     player.togglePlaying();
+                else {
+                    launchTries = 0;
+                    launchWait.start();
+                }
                 return;
             }
             if (d.info && d.info.name)
