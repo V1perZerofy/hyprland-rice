@@ -34,7 +34,13 @@ Pill {
         name: "weather"
         cardWidth: 380
         // refresh on open when older than 5 min (never loaded: getTime() is NaN → refresh)
-        onOpenChanged: if (open && !(Date.now() - Weather.updated.getTime() < 5 * 60 * 1000)) Weather.refresh()
+        onOpenChanged: {
+            if (!open)
+                return;
+            hoursFlick.contentX = 0;        // always start at "Now"
+            if (!(Date.now() - Weather.updated.getTime() < 5 * 60 * 1000))
+                Weather.refresh();
+        }
 
         // ── now ──
         RowLayout {

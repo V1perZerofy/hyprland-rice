@@ -25,7 +25,9 @@ Singleton {
     readonly property color barBg: alpha(bg, Settings.barOpacity)
     readonly property color pillBg: alpha(bg, Settings.pillOpacity)
     readonly property color pillHover: alpha(mix(bg, fg, 0.12), 0.80)
-    readonly property color cardBg: alpha(mix(bg, "#000000", 0.25), 0.94)
+    // cards (popouts, overlays, OSD, toasts) are opaque: at 94 % the windows
+    // behind still showed through and small text got hard to read
+    readonly property color cardBg: mix(bg, "#000000", 0.25)
     readonly property color panelBg: mix(bg, "#000000", 0.25)   // reading surfaces: fully opaque
     readonly property color surface: alpha(fg, 0.06)
     readonly property color surfaceHi: alpha(fg, 0.12)
