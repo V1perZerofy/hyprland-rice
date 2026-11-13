@@ -7,3 +7,7 @@ vim.filetype.add({
     [".*/hypr/.*%.conf"] = "hyprlang",
   },
 })
+
+-- mason's bin dir on PATH from the start (mason itself loads lazily), so
+-- parser rebuilds after plugin updates find its tree-sitter CLI
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
