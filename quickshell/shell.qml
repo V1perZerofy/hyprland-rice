@@ -20,6 +20,11 @@ ShellRoot {
         model: Quickshell.screens
         Bar {}
     }
+    // shared, morphing bar popout per screen
+    Variants {
+        model: Quickshell.screens
+        PopoutHost {}
+    }
 
     NotificationToasts {}
     Osd {}

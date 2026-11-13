@@ -20,7 +20,9 @@ follow.
 
 ## What's in it
 
-**The bar** (`quickshell/`)
+**The bar** (`quickshell/`): hover a pill and its card grows out of the bar;
+slide along the bar and the one card morphs between them. Click to pin.
+
 - Workspaces: hover one for a **live preview** of its windows, click to jump
 - Clock with a calendar · active window title
 - **Music**: track, progress and a live **cava** visualiser; the card has an
@@ -45,7 +47,7 @@ follow.
 - **Notes** (`SUPER+M`): reads my Obsidian vault right in a sidebar, with
   wikilinks and checkboxes
 - **Settings** (`SUPER+,`): bar on top or bottom, transparency, size, which
-  modules show, 24-hour clock, animations on/off, weather place. Applied live, saved to
+  modules show, 24-hour clock, animations on/off, open-on-hover, weather place. Applied live, saved to
   `~/.local/state/`, so personal bits stay out of this repo
 - **Keybind cheatsheet** (`SUPER+H`): built live from `hyprland.lua`, so it's
   never out of date

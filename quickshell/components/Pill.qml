@@ -16,6 +16,14 @@ Rectangle {
     // 0 = off, 1 = slow red pulse, 2 = fast (e.g. battery at 15 % / 5 %)
     property int alert: 0
     readonly property bool hovered: mouse.containsMouse
+    // set by a Popout inside this pill: hovering the pill opens it
+    property var popout: null
+    onHoveredChanged: if (popout) {
+        if (hovered)
+            Popups.hoverEnter(popout);
+        else
+            Popups.hoverLeave(popout);
+    }
 
     signal clicked(var mouse)
     signal wheel(var wheel)

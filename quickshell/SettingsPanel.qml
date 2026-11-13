@@ -239,6 +239,17 @@ Scope {
                     }
                 }
                 Row_ {
+                    label: "Open cards on hover"
+                    hint: "off = click the pills"
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    Switch {
+                        checked: Settings.hoverPopouts
+                        onToggled: Settings.hoverPopouts = !Settings.hoverPopouts
+                    }
+                }
+                Row_ {
                     label: "Animations"
                     hint: "off = everything instant"
                     Item {

@@ -42,6 +42,9 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 - [x] Motion: one shared style (components/Anim.qml, Theme.anim*/curve), palette
   crossfade on wallpaper change, cards zoom in + resize smoothly, bar slides on
   SUPER+O, pills fade in, track title/cover fade; "Animations" switch in settings
+- [x] Hover popouts (caelestia-style): one shared PopoutHost per screen grows
+  out of the bar and morphs between pills; click/use pins it (then it takes
+  the keyboard), Esc / click outside closes; "Open cards on hover" setting
 
 ## Left sidebar
 
@@ -101,6 +104,8 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 - [ ] Tailscale: login flow (`tailscale up` URL) and MagicDNS names in the peer list
 
 ## Bar polish
+
+- [ ] Edge drawers: dashboard on hovering the top edge, launcher from the bottom (caelestia)
 
 - [ ] Wi-Fi password prompt in the card (no impala round-trip for new networks)
 - [ ] Hover tooltips (e.g. full window title, update list preview)

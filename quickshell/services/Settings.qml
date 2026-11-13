@@ -25,6 +25,7 @@ Singleton {
     property alias scale: adapter.scale                   // 0.85..1.3
     property alias clock24h: adapter.clock24h
     property alias animations: adapter.animations         // false = everything instant
+    property alias hoverPopouts: adapter.hoverPopouts     // open bar cards on hover
     property alias hidden: adapter.hidden                 // module ids
     // { name, lat, lon } as ONE value: setting name/lat/lon one by one raced
     // with the saves and kept a stale latitude
@@ -52,6 +53,7 @@ Singleton {
         scale = 1.0;
         clock24h = true;
         animations = true;
+        hoverPopouts = true;
         hidden = [];
         weatherFahrenheit = false;
         // the weather city is left alone on purpose
@@ -83,6 +85,7 @@ Singleton {
             property real scale: 1.0
             property bool clock24h: true
             property bool animations: true
+            property bool hoverPopouts: true
             property var hidden: []
             property var weatherPlace: ({})
             property bool weatherFahrenheit: false
