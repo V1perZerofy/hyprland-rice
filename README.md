@@ -48,7 +48,7 @@ follow.
 **Media keys**: Play with nothing loaded shuffles my Apple Music *Heavy
 Rotation* mix. I'm lazy and I like it.
 
-**Also here:** kitty, fish + starship, Neovim (LazyVim), cava, btop, fastfetch,
+**Also here:** kitty, fish + starship, Neovim (LazyVim, see `nvim/README.md`), cava, btop, fastfetch,
 GTK/Qt theming. `quickshell/TODO.md` is my running list of what's done and
 what's next.
 
@@ -140,6 +140,9 @@ Log into Hyprland. The bar, OSD and notifications start on their own
   once (the VPN tab shows that command with a Copy button).
 - **Ollama:** `systemctl enable --now ollama` and pull a model. The model
   button in the sidebar cycles through whatever you have.
+- **QML language server** (for editing the shell in Neovim):
+  `touch ~/.config/quickshell/.qmlls.ini` and restart `qs`. Quickshell fills
+  it with the right import paths.
 - **Monitors:** I manage layouts with HyprMon (`hypr/hyprmon.lua`). Yours will
   differ: run `hyprmon` or edit the monitor section in `hyprland.lua`.
 
