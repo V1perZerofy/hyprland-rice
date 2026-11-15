@@ -1,7 +1,7 @@
-# Yazi colours from pywal — rendered to ~/.cache/wal/yazi-theme.toml on every
-# wallpaper change; ~/.config/yazi/theme.toml links to it. Only colours are
-# set here; icons and layout come from Yazi's own preset.
-#   accent = color1 (like the bar)  ·  muted = color8  ·  bg/fg = special
+# Yazi flavor from pywal: rendered to ~/.cache/wal/yazi-flavor.toml on every
+# wallpaper change; ~/.config/yazi/flavors/pywal.yazi/flavor.toml links to it
+# and theme.toml selects it. A flavor (not theme.toml) is what can replace the
+# dark-mode parts such as [filetype]. Icons stay from Yazi's preset.
 
 [mgr]
 cwd = {{ fg = "{color1}", bold = true }}
@@ -93,10 +93,10 @@ hovered = {{ fg = "{background}", bg = "{color1}", bold = true }}
 
 [filetype]
 rules = [
-	{{ mime = "image/*", fg = "{color3}" }},
-	{{ mime = "{{audio,video}}/*", fg = "{color5}" }},
-	{{ mime = "application/{{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}}", fg = "#e8677a" }},
-	{{ mime = "application/{{pdf,doc,rtf}}", fg = "{color2}" }},
+	{{ mime = "**/image/*", fg = "{color3}" }},
+	{{ mime = "**/{{audio,video}}/*", fg = "{color5}" }},
+	{{ mime = "**/application/{{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}}", fg = "#e8677a" }},
+	{{ mime = "**/application/{{pdf,doc,rtf}}", fg = "{color2}" }},
 	{{ url = "*", is = "orphan", bg = "#e8677a" }},
 	{{ url = "*", is = "exec", fg = "#8ccf7e" }},
 	{{ url = "*/", fg = "{color1}", bold = true }},
