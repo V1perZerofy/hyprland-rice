@@ -110,7 +110,7 @@ def _describe(action, loop_key):
             return {"next": "Next track", "previous": "Previous track",
                     "play-pause": "Play / pause"}.get(cmd.split()[1], cmd), cmd
         prog = os.path.basename(cmd.split()[0])
-        named = {"kitty": "Terminal", "dolphin": "File manager", "firefox": "Firefox",
+        named = {"kitty": "Terminal", "dolphin": "File manager", "nautilus": "File manager", "firefox": "Firefox",
                  "hyprlock": "Lock screen", "hyprshot": "Screenshot (region)",
                  "cider": "Cider (Apple Music)", "prusa-slicer": "PrusaSlicer",
                  "code-here.sh": "VS Code in current folder"}

@@ -44,7 +44,7 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 ---- MY PROGRAMS ----
 ------------------------------------------------------------
 local terminal = "kitty"
-local fileManager = "dolphin"
+local fileManager = "nautilus"
 
 ------------------------------------------------------------
 ---- AUTOSTART ----

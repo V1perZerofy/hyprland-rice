@@ -96,7 +96,7 @@ Main modifier (`mainMod`) is **SUPER** (the Windows key).
 | Bind | Action |
 | --- | --- |
 | `SUPER + T` / `SUPER + Return` | Terminal (kitty) |
-| `SUPER + E` | File manager (dolphin) |
+| `SUPER + E` | File manager (Nautilus, themed from pywal) |
 | `SUPER + Space` | App launcher (Quickshell) |
 | `SUPER + W` | Firefox |
 | `SUPER + C` | Cider (Wayland) |

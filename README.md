@@ -97,7 +97,7 @@ sudo pacman -S --needed \
   networkmanager impala bluez bluez-utils pavucontrol \
   upower power-profiles-daemon polkit-kde-agent \
   wl-clipboard libnotify libqalculate pacman-contrib curl \
-  dolphin ttf-jetbrains-mono-nerd
+  nautilus gvfs ttf-jetbrains-mono-nerd
 
 # from the AUR
 paru -S python-pywal colorz python-pywalfox hyprmon-bin
@@ -165,7 +165,7 @@ settings (`SUPER+,`). A few paths are still mine in the code:
 | Obsidian vault `~/Documents/Obsidian Vault` | `quickshell/Notes.qml` (`vault`) |
 | Mix that Play starts ("Heavy Rotation") | `quickshell/services/Cider.qml` (`mixName`) |
 | Assistant model `llama3.2` | `quickshell/sidebar/Assistant.qml` (`model`) |
-| Apps on keybinds (firefox, dolphin, PrusaSlicer, …) | `hypr/hyprland.lua` |
+| Apps on keybinds (firefox, nautilus, PrusaSlicer, …) | `hypr/hyprland.lua` |
 | Font, sizes, corner radius | `quickshell/services/Theme.qml` |
 
 ## Known quirks
