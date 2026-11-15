@@ -109,6 +109,8 @@ def _describe(action, loop_key):
         if cmd.startswith("playerctl "):
             return {"next": "Next track", "previous": "Previous track",
                     "play-pause": "Play / pause"}.get(cmd.split()[1], cmd), cmd
+        if " yazi" in cmd:
+            return "File manager (Yazi)", cmd
         prog = os.path.basename(cmd.split()[0])
         named = {"kitty": "Terminal", "dolphin": "File manager", "nautilus": "File manager", "firefox": "Firefox",
                  "hyprlock": "Lock screen", "hyprshot": "Screenshot (region)",

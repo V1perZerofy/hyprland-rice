@@ -1,0 +1,103 @@
+# Yazi colours from pywal — rendered to ~/.cache/wal/yazi-theme.toml on every
+# wallpaper change; ~/.config/yazi/theme.toml links to it. Only colours are
+# set here; icons and layout come from Yazi's own preset.
+#   accent = color1 (like the bar)  ·  muted = color8  ·  bg/fg = special
+
+[mgr]
+cwd = {{ fg = "{color1}", bold = true }}
+find_keyword  = {{ fg = "{color3}", bold = true, underline = true }}
+find_position = {{ fg = "{color5}", bold = true, italic = true }}
+symlink_target = {{ fg = "{color8}", italic = true }}
+marker_copied   = {{ fg = "#8ccf7e", bg = "#8ccf7e" }}
+marker_cut      = {{ fg = "#e8677a", bg = "#e8677a" }}
+marker_marked   = {{ fg = "{color5}", bg = "{color5}" }}
+marker_selected = {{ fg = "{color1}", bg = "{color1}" }}
+count_copied   = {{ fg = "{background}", bg = "#8ccf7e" }}
+count_cut      = {{ fg = "{background}", bg = "#e8677a" }}
+count_selected = {{ fg = "{background}", bg = "{color1}" }}
+border_symbol = "│"
+border_style  = {{ fg = "{color8}" }}
+
+[indicator]
+parent  = {{ fg = "{background}", bg = "{color8}" }}
+current = {{ fg = "{background}", bg = "{color1}", bold = true }}
+preview = {{ fg = "{color1}", underline = true }}
+
+[tabs]
+active   = {{ fg = "{background}", bg = "{color1}", bold = true }}
+inactive = {{ fg = "{color1}", bg = "{color0}" }}
+
+[mode]
+normal_main = {{ fg = "{background}", bg = "{color1}", bold = true }}
+normal_alt  = {{ fg = "{color1}", bg = "{color0}" }}
+select_main = {{ fg = "{background}", bg = "{color5}", bold = true }}
+select_alt  = {{ fg = "{color5}", bg = "{color0}" }}
+unset_main  = {{ fg = "{background}", bg = "#e8677a", bold = true }}
+unset_alt   = {{ fg = "#e8677a", bg = "{color0}" }}
+
+[status]
+perm_sep   = {{ fg = "{color8}" }}
+perm_type  = {{ fg = "{color1}" }}
+perm_read  = {{ fg = "{color3}" }}
+perm_write = {{ fg = "#e8677a" }}
+perm_exec  = {{ fg = "{color2}" }}
+progress_label  = {{ fg = "{foreground}", bold = true }}
+progress_normal = {{ fg = "{color1}", bg = "{color0}" }}
+progress_error  = {{ fg = "#e8677a", bg = "{color0}" }}
+
+[which]
+border = {{ fg = "{color1}" }}
+cand = {{ fg = "{color1}" }}
+rest = {{ fg = "{color8}" }}
+desc = {{ fg = "{color5}" }}
+separator_style = {{ fg = "{color8}" }}
+
+[confirm]
+border = {{ fg = "{color1}" }}
+title  = {{ fg = "{color1}", bold = true }}
+btn_yes = {{ fg = "{background}", bg = "{color1}" }}
+
+[spot]
+border   = {{ fg = "{color1}" }}
+title    = {{ fg = "{color1}", bold = true }}
+tbl_col  = {{ fg = "{color1}" }}
+tbl_cell = {{ fg = "{background}", bg = "{color1}" }}
+
+[notify]
+title_info  = {{ fg = "{color1}" }}
+title_warn  = {{ fg = "#e5b567" }}
+title_error = {{ fg = "#e8677a" }}
+
+[pick]
+border = {{ fg = "{color1}" }}
+active = {{ fg = "{color5}", bold = true }}
+
+[input]
+border   = {{ fg = "{color1}" }}
+title    = {{ fg = "{color1}" }}
+selected = {{ fg = "{background}", bg = "{color1}" }}
+
+[cmp]
+border = {{ fg = "{color1}" }}
+active = {{ fg = "{background}", bg = "{color1}" }}
+
+[tasks]
+border  = {{ fg = "{color1}" }}
+title   = {{ fg = "{color1}" }}
+hovered = {{ fg = "{color5}", bold = true }}
+
+[help]
+border  = {{ fg = "{color1}" }}
+chord   = {{ fg = "{color1}" }}
+hovered = {{ fg = "{background}", bg = "{color1}", bold = true }}
+
+[filetype]
+rules = [
+	{{ mime = "image/*", fg = "{color3}" }},
+	{{ mime = "{{audio,video}}/*", fg = "{color5}" }},
+	{{ mime = "application/{{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}}", fg = "#e8677a" }},
+	{{ mime = "application/{{pdf,doc,rtf}}", fg = "{color2}" }},
+	{{ url = "*", is = "orphan", bg = "#e8677a" }},
+	{{ url = "*", is = "exec", fg = "#8ccf7e" }},
+	{{ url = "*/", fg = "{color1}", bold = true }},
+]
