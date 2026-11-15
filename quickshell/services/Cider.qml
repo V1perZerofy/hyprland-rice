@@ -12,7 +12,7 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    readonly property string api: "http://localhost:10767/api/v1"
+    readonly property string api: "http://127.0.0.1:10767/api/v1"   // Cider listens on IPv4 only
     readonly property string home: Quickshell.env("HOME")
 
     property string token: ""
@@ -29,39 +29,30 @@ Singleton {
     // drill-in (artist top songs / album tracks): { title, items } or null
     property var detail: null
 
-    // Requests that never answer (Cider starting up / hanging) would otherwise
-    // stay open forever; Qt allows ~6 connections per host, so a few of those
-    // block every later request and `available` never recovers. So: every
-    // request is aborted after 4 s (→ status 0 → "not reachable").
-    property var pending: []
-    Timer {
-        interval: 1000
-        running: root.pending.length > 0
-        repeat: true
-        onTriggered: {
-            const now = Date.now();
-            for (const p of root.pending.slice())
-                if (now - p.t > 4000)
-                    p.x.abort();
-        }
-    }
-
+    // Every API call is its own short-lived curl process. XMLHttpRequest ran
+    // inside the shell's Qt network stack, which got stuck once (bar started
+    // the day before Cider, laptop suspended in between): every request failed
+    // silently until a restart. A fresh process can't inherit that, and
+    // curl's -m 4 is the timeout.
     function request(method, path, body, cb) {
-        const x = new XMLHttpRequest();
-        const entry = {
-            x: x,
-            t: Date.now()
-        };
-        pending = pending.concat([entry]);
-        x.onreadystatechange = () => {
-            if (x.readyState !== XMLHttpRequest.DONE)
-                return;
-            root.pending = root.pending.filter(p => p !== entry);
+        const args = ["curl", "-s", "-m", "4", "-X", method, "-w", "\\n%{http_code}"];
+        if (token)
+            args.push("-H", "apptoken: " + token);
+        if (body)
+            args.push("-H", "Content-Type: application/json", "--data-binary", JSON.stringify(body));
+        args.push(api + path);
+        const p = curlProc.createObject(root, {
+            command: args
+        });
+        p.done = (code, out) => {
+            const nl = out.lastIndexOf("\n");
+            const status = parseInt(out.slice(nl + 1)) || 0;
             let d = null;
             try {
-                d = JSON.parse(x.responseText);
+                d = JSON.parse(out.slice(0, nl));
             } catch (e) {}
-            if (x.status === 0) {
+            if (code !== 0 || status === 0) {
+                // 7 = refused (not running), 28 = timed out
                 root.available = false;
                 cb && cb(null, "Cider isn't running (or its API is off)");
             } else if (d && d.statusCode >= 400) {
@@ -73,13 +64,26 @@ Singleton {
                 cb && cb(d, "");
             }
         };
-        x.open(method, api + path);
-        if (token)
-            x.setRequestHeader("apptoken", token);
-        if (body)
-            x.setRequestHeader("Content-Type", "application/json");
-        x.send(body ? JSON.stringify(body) : null);
+        p.running = true;
     }
+    Component {
+        id: curlProc
+        Process {
+            property var done: null
+            stdout: StdioCollector {
+                id: out
+            }
+            onExited: code => {
+                // stdout may finish just after exit: read it on the next tick
+                Qt.callLater(() => {
+                    if (done)
+                        done(code, out.text);
+                    destroy();
+                });
+            }
+        }
+    }
+
     // Apple Music API call proxied through Cider (uses your account)
     function am(path, cb) {
         request("POST", "/amapi/run-v3", {
