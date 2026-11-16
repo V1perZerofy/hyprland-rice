@@ -210,23 +210,27 @@ Scope {
             bottom: true
             right: true
         }
-        margins.top: (Popups.barVisible && !Settings.barBottom ? Theme.barHeight : 0) + 8
-        margins.bottom: (Popups.barVisible && Settings.barBottom ? Theme.barHeight : 0) + 8
+        // docked (exclusionMode Auto) already sits inside the bar's reserved
+        // space; only the floating drawer has to clear the bar itself
+        margins.top: (Popups.barVisible && !Settings.barBottom && !root.pinned ? Theme.barHeight : 0) + 8
+        margins.bottom: (Popups.barVisible && Settings.barBottom && !root.pinned ? Theme.barHeight : 0) + 8
         margins.right: 8
         implicitWidth: root.panelWidth
-        exclusionMode: root.pinned ? ExclusionMode.Normal : ExclusionMode.Ignore
-        exclusiveZone: root.pinned ? root.panelWidth + 8 : 0
+        // docked: Auto reserves the panel's width so windows make room. No
+        // explicit exclusiveZone: setting it forces Normal mode even when
+        // floating, which pushed the drawer down by a second bar height.
+        exclusionMode: root.pinned ? ExclusionMode.Auto : ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-notes"
         WlrLayershell.keyboardFocus: drawer.keyboardFocus(WlrKeyboardFocus.OnDemand, WlrKeyboardFocus.Exclusive, WlrKeyboardFocus.None)
         color: "transparent"
-        visible: root.open || panel.x < win.width
+        visible: root.open || panel.x < root.panelWidth     // fixed width: no binding loop via win.width
 
         Rectangle {
             id: panel
             width: parent.width
             height: parent.height
-            x: root.open ? 0 : win.width + 10
+            x: root.open ? 0 : root.panelWidth + 10
             radius: Theme.cardRadius
             color: Theme.panelBg
             border.color: Theme.border
