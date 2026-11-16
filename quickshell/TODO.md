@@ -45,6 +45,9 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 - [x] Hover popouts (caelestia-style): one shared PopoutHost per screen grows
   out of the bar and morphs between pills; click/use pins it (then it takes
   the keyboard), Esc / click outside closes; "Open cards on hover" setting
+- [x] Edge drawers (DrawerState + EdgeSensor): top edge → dashboard drawer
+  (DashDrawer.qml, SUPER+G), left → sidebar, right → notes; dwell to open,
+  leave to close, click pins (then keyboard); "Edge drawers" setting
 
 ## Left sidebar
 
@@ -105,7 +108,7 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 
 ## Bar polish
 
-- [ ] Edge drawers: dashboard on hovering the top edge, launcher from the bottom (caelestia)
+- [ ] Bottom-edge drawer for the launcher (caelestia)
 
 - [ ] Wi-Fi password prompt in the card (no impala round-trip for new networks)
 - [ ] Hover tooltips (e.g. full window title, update list preview)

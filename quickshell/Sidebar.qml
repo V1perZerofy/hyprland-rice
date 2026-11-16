@@ -14,24 +14,34 @@ import qs.sidebar
 Scope {
     id: root
 
-    property bool open: false
+    // left screen edge (hover) or SUPER+A (pinned); see DrawerState
+    property alias open: drawer.open
+    readonly property alias drawer: drawer
     property int tab: 0
+
+    DrawerState {
+        id: drawer
+    }
+    EdgeSensor {
+        drawer: drawer
+        edge: "left"
+        screen: win.screen
+    }
 
     IpcHandler {
         target: "sidebar"
         function toggle(): void {
-            root.open = !root.open;
+            drawer.toggle();
         }
         // open straight into the chat
         function assistant(): void {
             root.tab = 1;
-            root.open = true;
+            drawer.openPinned();
             chatTab.focusInput();
         }
     }
 
     onOpenChanged: {
-        SysStats.active = open;
         if (open) {
             Brightness.refresh();
             if (Popups.current)
@@ -54,7 +64,7 @@ Scope {
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-sidebar"
-        WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+        WlrLayershell.keyboardFocus: drawer.keyboardFocus(WlrKeyboardFocus.OnDemand, WlrKeyboardFocus.Exclusive, WlrKeyboardFocus.None)
         color: "transparent"
         visible: root.open || panel.x > -win.width
 
@@ -75,7 +85,21 @@ Scope {
                 }
             }
 
-            Keys.onEscapePressed: root.open = false
+            Keys.onEscapePressed: drawer.close()
+
+            HoverHandler {
+                onHoveredChanged: drawer.panelHovered = hovered
+            }
+            // any press pins a hover-opened drawer, then reaches the control below
+            MouseArea {
+                anchors.fill: parent
+                z: 100
+                acceptedButtons: Qt.AllButtons
+                onPressed: m => {
+                    drawer.pinFromClick();
+                    m.accepted = false;
+                }
+            }
 
             ColumnLayout {
                 anchors.fill: parent
@@ -123,7 +147,7 @@ Scope {
                         icon: Icons.settings
                         size: 34
                         onClicked: {
-                            root.open = false;
+                            drawer.close();
                             Popups.requested("settings");
                         }
                     }
@@ -131,14 +155,14 @@ Scope {
                         icon: Icons.power
                         size: 34
                         onClicked: {
-                            root.open = false;
+                            drawer.close();
                             Popups.requested("power");
                         }
                     }
                     IconButton {
                         icon: Icons.close
                         size: 34
-                        onClicked: root.open = false
+                        onClicked: drawer.close()
                     }
                 }
 

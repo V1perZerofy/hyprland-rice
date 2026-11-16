@@ -22,7 +22,7 @@ Pill {
 
     visible: (player !== null || Cider.available) && Settings.shows("media")
     active: pop.open
-    progress: player && player.lengthSupported && player.length > 0 ? player.position / player.length : -1
+    progress: Players.hasLength(player) ? player.position / player.length : -1
 
     onClicked: m => {
         if (m.button === Qt.MiddleButton)
@@ -495,7 +495,7 @@ Pill {
         ColumnLayout {
             Layout.fillWidth: true
             spacing: 2
-            visible: !pop.searching && pop.p !== null && pop.p.lengthSupported && pop.p.length > 0
+            visible: !pop.searching && Players.hasLength(pop.p)
 
             Slider {
                 Layout.fillWidth: true

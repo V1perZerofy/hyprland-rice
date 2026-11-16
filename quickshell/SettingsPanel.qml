@@ -239,6 +239,17 @@ Scope {
                     }
                 }
                 Row_ {
+                    label: "Edge drawers"
+                    hint: "mouse on left / right / top edge"
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    Switch {
+                        checked: Settings.edgeDrawers
+                        onToggled: Settings.edgeDrawers = !Settings.edgeDrawers
+                    }
+                }
+                Row_ {
                     label: "Open cards on hover"
                     hint: "off = click the pills"
                     Item {

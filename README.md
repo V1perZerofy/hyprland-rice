@@ -40,6 +40,9 @@ slide along the bar and the one card morphs between them. Click to pin.
 - **App launcher** (`SUPER+Space`): fuzzy search, most-used first, maths via qalc
 - **Wallpaper picker** (`SUPER+B`): shows each wallpaper's pywal palette
   *before* you apply it
+- **Edge drawers**: rest the mouse on the top edge for a dashboard (time,
+  weather, music, system), on the left edge for the sidebar, on the right edge
+  for notes. Click inside to keep one open (`SUPER+G` / `SUPER+A` / `SUPER+M`)
 - **Workspace overview** (`SUPER+Tab`): every workspace live, drag windows
   between them, middle-click to close
 - **Sidebar** (`SUPER+A`): quick toggles, sliders, media, system stats, a todo
@@ -68,6 +71,7 @@ what's next.
 | `SUPER+Space` | Launcher |
 | `SUPER+Tab` | Workspace overview |
 | `SUPER+A` | Sidebar (dashboard + assistant) |
+| `SUPER+G` | Dashboard drawer (or mouse on the top edge) |
 | `SUPER+M` | Notes |
 | `SUPER+B` | Wallpaper picker |
 | `SUPER+U` | Music search (starts Cider if needed) |

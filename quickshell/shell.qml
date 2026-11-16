@@ -34,7 +34,18 @@ ShellRoot {
     SettingsPanel {}
     WallpaperPicker {}
     Notes {}
-    Sidebar {}
+    Sidebar {
+        id: sidebar
+    }
+    DashDrawer {
+        id: dash
+    }
+    // system stats are only collected while something shows them
+    Binding {
+        target: SysStats
+        property: "active"
+        value: sidebar.open || dash.open
+    }
 
     IpcHandler {
         target: "bar"

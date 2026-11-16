@@ -23,8 +23,23 @@ Scope {
     readonly property string todo: home + "/.config/quickshell/TODO.md"
     readonly property int panelWidth: 560
 
-    property bool open: false
+    // right screen edge (hover) or SUPER+M (pinned); see DrawerState.
+    // `pinned` below is different: it docks the panel (windows make room).
+    property alias open: drawer.open
+    readonly property alias drawer: drawer
     property bool pinned: false
+
+    DrawerState {
+        id: drawer
+    }
+    EdgeSensor {
+        drawer: drawer
+        edge: "right"
+        screen: win.screen
+        visible: Settings.edgeDrawers && !root.pinned     // docked: always open anyway
+    }
+    // docked = held open
+    onPinnedChanged: if (pinned) drawer.openPinned()
     property string current: ""          // path of the open note ("" = browser)
     property var history: []             // back stack of paths
     property bool editing: false
@@ -50,7 +65,8 @@ Scope {
         if (current && current !== path)
             history = history.concat([current]);
         current = path;
-        open = true;
+        if (!drawer.open)
+            drawer.openPinned();
         saveState();
     }
     function back() {
@@ -171,7 +187,7 @@ Scope {
         function toggle(): void {
             if (root.open && root.editing)
                 root.saveEdit();
-            root.open = !root.open;
+            drawer.toggle();
         }
         // empty path → note browser
         function open(path: string): void {
@@ -180,7 +196,7 @@ Scope {
             } else {
                 root.saveEdit();
                 root.current = "";
-                root.open = true;
+                drawer.openPinned();
             }
         }
     }
@@ -202,7 +218,7 @@ Scope {
         exclusiveZone: root.pinned ? root.panelWidth + 8 : 0
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-notes"
-        WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+        WlrLayershell.keyboardFocus: drawer.keyboardFocus(WlrKeyboardFocus.OnDemand, WlrKeyboardFocus.Exclusive, WlrKeyboardFocus.None)
         color: "transparent"
         visible: root.open || panel.x < win.width
 
@@ -227,7 +243,21 @@ Scope {
                 if (root.editing)
                     root.saveEdit();
                 else
-                    root.open = false;
+                    drawer.close();
+            }
+
+            HoverHandler {
+                onHoveredChanged: drawer.panelHovered = hovered
+            }
+            // any press pins a hover-opened drawer, then reaches the control below
+            MouseArea {
+                anchors.fill: parent
+                z: 100
+                acceptedButtons: Qt.AllButtons
+                onPressed: m => {
+                    drawer.pinFromClick();
+                    m.accepted = false;
+                }
             }
 
             ColumnLayout {
@@ -307,7 +337,7 @@ Scope {
                         size: 32
                         onClicked: {
                             root.saveEdit();
-                            root.open = false;
+                            drawer.close();
                         }
                     }
                 }
@@ -356,7 +386,7 @@ Scope {
                                         if (noteList.currentItem)
                                             root.show(noteList.currentItem.modelData.path);
                                     } else if (e.key === Qt.Key_Escape)
-                                        root.open = false;
+                                        drawer.close();
                                     else
                                         return;
                                     e.accepted = true;

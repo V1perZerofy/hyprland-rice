@@ -87,7 +87,7 @@ QS = {  # qs ipc call <target> <fn>
     "bar toggle": "Show / hide bar", "sidebar toggle": "Dashboard sidebar",
     "notifs restore": "Restore last notification", "notifs closeAll": "Clear notifications",
     "notifs dnd": "Do not disturb", "keybinds toggle": "This cheatsheet",
-    "music play": "Play / pause", "overview toggle": "Workspace overview", "settings toggle": "Settings",
+    "music play": "Play / pause", "overview toggle": "Workspace overview", "settings toggle": "Settings", "dash toggle": "Dashboard drawer",
 }
 
 

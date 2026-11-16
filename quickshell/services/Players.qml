@@ -23,6 +23,12 @@ Singleton {
         return ps[0];
     }
 
+    // a usable track length? (Cider sometimes reports INT64_MAX µs ≈ 2.5 billion
+    // hours while it doesn't know the length yet)
+    function hasLength(p) {
+        return p !== null && p !== undefined && p.lengthSupported && p.length > 0 && p.length < 86400;
+    }
+
     function fmt(secs) {
         if (!isFinite(secs) || secs < 0)
             return "0:00";
