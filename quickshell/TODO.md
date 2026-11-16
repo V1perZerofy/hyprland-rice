@@ -48,6 +48,9 @@ changes. Always start with `qs -n` so a crash-restart can't leave two bars.
 - [x] Edge drawers (DrawerState + EdgeSensor): top edge → dashboard drawer
   (DashDrawer.qml, SUPER+G), left → sidebar, right → notes; dwell to open,
   leave to close, click pins (then keyboard); "Edge drawers" setting
+- [x] Dynamic island (modules/Island.qml): centre shows only workspaces; hover
+  → music (left) + weather (right) slide out, equal widths so the workspaces
+  never move; stays open while their card is open. Cards follow moving pills.
 
 ## Left sidebar
 

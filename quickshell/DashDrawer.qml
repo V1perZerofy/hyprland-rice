@@ -34,7 +34,16 @@ Scope {
             drawer.toggle();
         }
     }
-    onOpenChanged: if (open && Popups.current) Popups.close()
+    onOpenChanged: {
+        if (open && Popups.current)
+            Popups.close();
+        if (!open)
+            closing.restart();
+    }
+    Timer {
+        id: closing
+        interval: Theme.animSlow + 60
+    }
 
     SystemClock {
         id: clock
@@ -53,7 +62,8 @@ Scope {
         WlrLayershell.namespace: "qs-dash"
         WlrLayershell.keyboardFocus: drawer.keyboardFocus(WlrKeyboardFocus.OnDemand, WlrKeyboardFocus.Exclusive, WlrKeyboardFocus.None)
         color: "transparent"
-        visible: root.open || card.y > -card.height
+        // stays mapped until the slide-up has finished (no binding loop via card.y)
+        visible: root.open || closing.running
         // only the card takes input while it's on screen
         mask: Region {
             item: card

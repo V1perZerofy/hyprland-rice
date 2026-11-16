@@ -45,6 +45,19 @@ Item {
         }
     }
 
+    // follow the pill while open (it can move, e.g. in the expanding island);
+    // the host's x animation smooths it
+    Timer {
+        interval: 60
+        repeat: true
+        running: root.open
+        onTriggered: {
+            const x = root.owner.mapToItem(null, root.owner.width / 2, 0).x;
+            if (Math.abs(x - root.anchorX) > 0.5)
+                root.anchorX = x;
+        }
+    }
+
     // let the pill report hover to Popups
     Component.onCompleted: if (owner && owner.popout !== undefined) owner.popout = root
 

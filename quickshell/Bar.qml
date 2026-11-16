@@ -67,12 +67,10 @@ PanelWindow {
             anchors.centerIn: parent
             spacing: 6
 
-            Workspaces {
+            // workspaces; music + weather slide out on hover
+            Island {
                 screen: bar.modelData
-                visible: Settings.shows("workspaces")
             }
-            Media {}
-            Weather {}
         }
 
         RowLayout {

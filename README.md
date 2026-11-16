@@ -23,6 +23,8 @@ follow.
 **The bar** (`quickshell/`): hover a pill and its card grows out of the bar;
 slide along the bar and the one card morphs between them. Click to pin.
 
+- **Dynamic island** in the middle: just the workspaces; hover it and music
+  and weather slide out of it
 - Workspaces: hover one for a **live preview** of its windows, click to jump
 - Clock with a calendar · active window title
 - **Music**: track, progress and a live **cava** visualiser; the card has an
