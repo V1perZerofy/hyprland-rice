@@ -200,7 +200,7 @@ hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("qs ipc call music search")) -- Apple
 hl.bind(mainMod .. " + H", hl.dsp.exec_cmd("qs ipc call keybinds toggle")) -- keybind cheatsheet
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("qs ipc call overview toggle")) -- workspace overview
 hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("qs ipc call settings toggle")) -- settings
-hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("qs ipc call dash toggle")) -- dashboard drawer (also: mouse on top edge)
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("qs ipc call dash toggle")) -- dashboard (also: hover the island in the bar centre)
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("pkill -x qs; sleep 1; qs -n -d")) -- restart bar (-n: never two copies)
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("cider --ozone-platform=wayland"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
