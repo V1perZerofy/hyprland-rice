@@ -14,7 +14,7 @@ Singleton {
     // bar modules in bar order: [id, label]
     readonly property var modules: [
         ["launcher", "Launcher"], ["notes", "Notes"], ["clock", "Clock"], ["window", "Window title"],
-        ["workspaces", "Workspaces"], ["media", "Media"], ["weather", "Weather"],
+        ["workspaces", "Workspaces"],
         ["tray", "Tray"], ["notifications", "Notifications"], ["updates", "Updates"], ["monitors", "Monitors"],
         ["network", "Network"], ["audio", "Audio"], ["bluetooth", "Bluetooth"], ["battery", "Battery"]
     ]

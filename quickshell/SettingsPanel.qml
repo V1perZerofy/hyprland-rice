@@ -240,7 +240,7 @@ Scope {
                 }
                 Row_ {
                     label: "Edge drawers"
-                    hint: "mouse on left / right / top edge"
+                    hint: "left / right edge, island → dashboard"
                     Item {
                         Layout.fillWidth: true
                     }

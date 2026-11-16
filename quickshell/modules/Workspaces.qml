@@ -22,7 +22,8 @@ Rectangle {
     // ── hover preview ────────────────────────────────────────────────────────
     property HyprlandWorkspace hoveredWs: null
     property bool suppress: false            // after a click, until the mouse leaves
-    readonly property bool wantPreview: !suppress && (hoveredWs !== null || preview.cardHovered)
+    // in the dynamic island, hovering opens the dashboard instead (previews: SUPER+Tab)
+    readonly property bool wantPreview: !suppress && !Popups.islandHovered && !Popups.dashOpen && (hoveredWs !== null || preview.cardHovered)
 
     onWantPreviewChanged: {
         if (wantPreview) {

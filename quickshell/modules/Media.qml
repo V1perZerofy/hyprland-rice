@@ -199,7 +199,7 @@ Pill {
             function onRequested(n) {
                 if (n !== "media-search" || !Hyprland.focusedMonitor || !pop.screen || pop.screen.name !== Hyprland.focusedMonitor.name)
                     return;
-                pop.open = true;
+                Popups.show(pop, true);     // pinned: takes the keyboard
                 Qt.callLater(() => field.forceActiveFocus());
             }
         }

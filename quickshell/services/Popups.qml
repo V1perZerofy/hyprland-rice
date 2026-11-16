@@ -15,6 +15,10 @@ Singleton {
     property var current: null          // the open Popout
     property bool pinned: false
     property bool barVisible: true
+    // dynamic island ↔ dashboard drawer (it grows out of the island)
+    property bool islandHovered: false
+    property real islandWidth: 0
+    property bool dashOpen: false
 
     // `qs ipc call bar popout <name>` → the matching Popout on the focused monitor toggles
     signal requested(string name)

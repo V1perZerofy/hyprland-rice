@@ -9,8 +9,8 @@ import qs.services
 import qs.components
 import qs.sidebar
 
-// Dashboard drawer from the top edge (caelestia-style): rest the mouse on the
-// top-centre of the screen and it slides down; leave and it slides back.
+// Dashboard that grows out of the bar's dynamic island (modules/Island.qml):
+// hover the island and it widens + unfolds from it; leave and it folds back.
 // Click inside to keep it. Time + weather · music · system.
 //   qs ipc call dash toggle
 Scope {
@@ -22,12 +22,26 @@ Scope {
     DrawerState {
         id: drawer
     }
-    EdgeSensor {
-        drawer: drawer
-        edge: "top"
-        span: 0.4
-        screen: win.screen
+    // the island is the trigger (instead of a screen edge)
+    Binding {
+        target: drawer
+        property: "edgeHovered"
+        value: Popups.islandHovered
     }
+    Binding {
+        target: Popups
+        property: "dashOpen"
+        value: root.open
+    }
+    // a bar card opening (music search, weather…) replaces the dashboard
+    Connections {
+        target: Popups
+        function onCurrentChanged() {
+            if (Popups.current)
+                drawer.close();
+        }
+    }
+    readonly property real fullHeight: body.implicitHeight + 32
     IpcHandler {
         target: "dash"
         function toggle(): void {
@@ -53,10 +67,13 @@ Scope {
     PanelWindow {
         id: win
         screen: Quickshell.screens.find(s => Hyprland.focusedMonitor && s.name === Hyprland.focusedMonitor.name) ?? Quickshell.screens[0]
-        anchors.top: true
-        margins.top: (Popups.barVisible && !Settings.barBottom ? Theme.barHeight : 0) + 6
+        anchors.top: !Settings.barBottom
+        anchors.bottom: Settings.barBottom
+        // flush against the bar, right under (or above) the island
+        margins.top: Settings.barBottom ? 0 : (Popups.barVisible ? Theme.barHeight - 2 : 6)
+        margins.bottom: Settings.barBottom ? (Popups.barVisible ? Theme.barHeight - 2 : 6) : 0
         implicitWidth: Math.min(900, (screen ? screen.width : 1920) - 40)
-        implicitHeight: card.height + 10
+        implicitHeight: root.fullHeight + 4
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "qs-dash"
@@ -71,18 +88,35 @@ Scope {
 
         Rectangle {
             id: card
-            width: parent.width
-            height: body.implicitHeight + 32
-            // slides down from behind the top edge
-            y: root.open ? 0 : -height - 10
+            // grows out of the island: from its width and zero height to full size
+            width: root.open ? win.width : Math.max(40, Popups.islandWidth)
+            height: root.open ? root.fullHeight : 0
+            x: (win.width - width) / 2
+            y: Settings.barBottom ? win.height - height : 0
             radius: Theme.cardRadius
+            // the edge joined to the island is flatter
+            topLeftRadius: Settings.barBottom ? Theme.cardRadius : 8
+            topRightRadius: Settings.barBottom ? Theme.cardRadius : 8
+            bottomLeftRadius: Settings.barBottom ? 8 : Theme.cardRadius
+            bottomRightRadius: Settings.barBottom ? 8 : Theme.cardRadius
             color: Theme.panelBg
             border.color: Theme.border
             border.width: 1
             clip: true
-            Behavior on y {
+            opacity: root.open ? 1 : 0
+            Behavior on width {
                 Anim {
                     duration: Theme.animSlow
+                }
+            }
+            Behavior on height {
+                Anim {
+                    duration: Theme.animSlow
+                }
+            }
+            Behavior on opacity {
+                Anim {
+                    duration: Theme.anim
                 }
             }
 
@@ -95,9 +129,10 @@ Scope {
 
             RowLayout {
                 id: body
-                x: 16
-                y: 16
-                width: parent.width - 32
+                // full size from the start, centred: the growing card reveals it
+                x: (card.width - win.width) / 2 + 16
+                y: Settings.barBottom ? card.height - root.fullHeight + 16 : 16
+                width: win.width - 32
                 spacing: 14
 
                 // ── time + weather ──
@@ -125,6 +160,13 @@ Scope {
                         Layout.topMargin: 10
                         visible: Weather.enabled && Weather.current !== null
                         spacing: 8
+                        // click: the full weather card (12 h + 5 days)
+                        HoverHandler {
+                            cursorShape: Qt.PointingHandCursor
+                        }
+                        TapHandler {
+                            onTapped: Popups.requested("weather")
+                        }
                         Glyph {
                             text: Weather.current ? Weather.glyph(Weather.current.code, Weather.current.isDay) : ""
                             size: 22
@@ -229,6 +271,13 @@ Scope {
                                     icon: Icons.next
                                     size: 34
                                     onClicked: if (root.player) root.player.next()
+                                }
+                                // Apple Music search (the music card, now opened from the island)
+                                IconButton {
+                                    visible: Cider.available
+                                    icon: Icons.search
+                                    size: 34
+                                    onClicked: Popups.requested("media-search")
                                 }
                                 Item {
                                     Layout.fillWidth: true
